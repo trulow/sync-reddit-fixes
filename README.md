@@ -20,13 +20,42 @@ Click the button below, or manually add this repo url to Morphe Manager: https:/
 ## 🩹 Patches list
 
 <!-- PATCHES_START EXPANDED -->
+> **[v1.0.0](https://github.com/trulow/sync-reddit-fixes/releases/tag/v1.0.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;4 patches total
+<details open>
+<summary>📦 Sync for Reddit&nbsp;&nbsp;•&nbsp;&nbsp;2 patches</summary>
+<br>
 
-<!-- Do not modify this section by hand. The patch list is generated when release.yml creates a new release. -->
+**Package name:** `com.laurencedawson.reddit_sync`
 
-| Patch | What it fixes |
-|-------|---------------|
-| **Fix load more comments** | Tapping "load more comments" shows *Error loading more comments*: Reddit blocked `/api/morechildren`. Sync now loads the missing comments from `/comments/{post}/_/{parent}`, the endpoint it already uses for single-comment threads, and turns the reply back into the list Sync expects. |
-| **Fix Reddit galleries** | Galleries fail with *Could not load gallery*: Reddit blocked `/api/info`. Sync now loads the gallery post from `/comments/{post}`, which carries the same `media_metadata` and `gallery_data`. |
+**🎯 Supported versions:**
+
+| v23.06.30-13:39 |
+| :---: |
+
+| 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
+|----------|----------------|-----------|
+| [Fix Reddit galleries](#fix-reddit-galleries) | Fixes Reddit image galleries failing to load ("Could not load gallery") since Reddit blocked /api/info for third-party clients. Galleries are loaded from /comments instead. |  |
+| [Fix load more comments](#fix-load-more-comments) | Fixes "Error loading more comments" since Reddit blocked /api/morechildren for third-party clients. The missing comments are loaded from /comments instead. At the bottom of very large threads Reddit's 500 comment limit can still leave some out. |  |
+
+</details>
+
+<details open>
+<summary>📦 Sync for Reddit Pro&nbsp;&nbsp;•&nbsp;&nbsp;2 patches</summary>
+<br>
+
+**Package name:** `com.laurencedawson.reddit_sync.pro`
+
+**🎯 Supported versions:**
+
+| v23.06.30-13:39 |
+| :---: |
+
+| 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
+|----------|----------------|-----------|
+| [Fix Reddit galleries](#fix-reddit-galleries) | Fixes Reddit image galleries failing to load ("Could not load gallery") since Reddit blocked /api/info for third-party clients. Galleries are loaded from /comments instead. |  |
+| [Fix load more comments](#fix-load-more-comments) | Fixes "Error loading more comments" since Reddit blocked /api/morechildren for third-party clients. The missing comments are loaded from /comments instead. At the bottom of very large threads Reddit's 500 comment limit can still leave some out. |  |
+
+</details>
 
 <!-- PATCHES_END -->
 
