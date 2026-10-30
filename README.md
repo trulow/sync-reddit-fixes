@@ -20,9 +20,9 @@ Click the button below, or manually add this repo url to Morphe Manager: https:/
 ## 🩹 Patches list
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.1.0](https://github.com/trulow/sync-reddit-fixes/releases/tag/v1.1.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;6 patches total
+> **[v1.2.0-dev.1](https://github.com/trulow/sync-reddit-fixes/releases/tag/v1.2.0-dev.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;8 patches total
 <details open>
-<summary>📦 Sync for Reddit&nbsp;&nbsp;•&nbsp;&nbsp;3 patches</summary>
+<summary>📦 Sync for Reddit&nbsp;&nbsp;•&nbsp;&nbsp;4 patches</summary>
 <br>
 
 **Package name:** `com.laurencedawson.reddit_sync`
@@ -35,13 +35,14 @@ Click the button below, or manually add this repo url to Morphe Manager: https:/
 | 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
 |----------|----------------|-----------|
 | [Fix Reddit galleries](#fix-reddit-galleries) | Fixes Reddit image galleries failing to load ("Could not load gallery") since Reddit blocked /api/info for third-party clients. Galleries are loaded from /comments instead. |  |
+| [Fix Redgifs API](#fix-redgifs-api) | Fixes "Error connecting to Redgifs": answers the Redgifs endpoints Sync relies on that were removed, uses Redgifs' temporary token, and fixes video ids taken from links like redgifs.com/watch/{id}/?92. Works on Sync and Sync Pro. Turn off Patcheddit's "Fix Redgifs API" when using this one: both change the same code. |  |
 | [Fix load more comments](#fix-load-more-comments) | Fixes "Error loading more comments" since Reddit blocked /api/morechildren for third-party clients. The missing comments are loaded from /comments instead. At the bottom of very large threads Reddit's 500 comment limit can still leave some out. |  |
 | [Unlock Sync Ultra](#unlock-sync-ultra) | Unlocks Sync Ultra Lifetime. |  |
 
 </details>
 
 <details open>
-<summary>📦 Sync for Reddit Pro&nbsp;&nbsp;•&nbsp;&nbsp;3 patches</summary>
+<summary>📦 Sync for Reddit Pro&nbsp;&nbsp;•&nbsp;&nbsp;4 patches</summary>
 <br>
 
 **Package name:** `com.laurencedawson.reddit_sync.pro`
@@ -54,6 +55,7 @@ Click the button below, or manually add this repo url to Morphe Manager: https:/
 | 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
 |----------|----------------|-----------|
 | [Fix Reddit galleries](#fix-reddit-galleries) | Fixes Reddit image galleries failing to load ("Could not load gallery") since Reddit blocked /api/info for third-party clients. Galleries are loaded from /comments instead. |  |
+| [Fix Redgifs API](#fix-redgifs-api) | Fixes "Error connecting to Redgifs": answers the Redgifs endpoints Sync relies on that were removed, uses Redgifs' temporary token, and fixes video ids taken from links like redgifs.com/watch/{id}/?92. Works on Sync and Sync Pro. Turn off Patcheddit's "Fix Redgifs API" when using this one: both change the same code. |  |
 | [Fix load more comments](#fix-load-more-comments) | Fixes "Error loading more comments" since Reddit blocked /api/morechildren for third-party clients. The missing comments are loaded from /comments instead. At the bottom of very large threads Reddit's 500 comment limit can still leave some out. |  |
 | [Unlock Sync Ultra](#unlock-sync-ultra) | Unlocks Sync Ultra Lifetime. |  |
 
