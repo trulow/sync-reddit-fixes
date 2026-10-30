@@ -8,6 +8,7 @@ android {
 
 dependencies {
     compileOnly(project(":extensions:syncforreddit:stub"))
+    compileOnly(libs.okhttp)
 }
 
 // The extension is plain Java. Keep the Kotlin standard library, which the Android plugin adds to every

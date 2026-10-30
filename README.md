@@ -20,9 +20,9 @@ Click the button below, or manually add this repo url to Morphe Manager: https:/
 ## 🩹 Patches list
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.1.0](https://github.com/trulow/sync-reddit-fixes/releases/tag/v1.1.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;6 patches total
+> **[v1.2.0-dev.1](https://github.com/trulow/sync-reddit-fixes/releases/tag/v1.2.0-dev.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;8 patches total
 <details open>
-<summary>📦 Sync for Reddit&nbsp;&nbsp;•&nbsp;&nbsp;3 patches</summary>
+<summary>📦 Sync for Reddit&nbsp;&nbsp;•&nbsp;&nbsp;4 patches</summary>
 <br>
 
 **Package name:** `com.laurencedawson.reddit_sync`
@@ -35,13 +35,14 @@ Click the button below, or manually add this repo url to Morphe Manager: https:/
 | 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
 |----------|----------------|-----------|
 | [Fix Reddit galleries](#fix-reddit-galleries) | Fixes Reddit image galleries failing to load ("Could not load gallery") since Reddit blocked /api/info for third-party clients. Galleries are loaded from /comments instead. |  |
+| [Fix Redgifs API](#fix-redgifs-api) | Fixes "Error connecting to Redgifs": answers the Redgifs endpoints Sync relies on that were removed, uses Redgifs' temporary token, and fixes video ids taken from links like redgifs.com/watch/{id}/?92. Works on Sync and Sync Pro. Turn off Patcheddit's "Fix Redgifs API" when using this one: both change the same code. |  |
 | [Fix load more comments](#fix-load-more-comments) | Fixes "Error loading more comments" since Reddit blocked /api/morechildren for third-party clients. The missing comments are loaded from /comments instead. At the bottom of very large threads Reddit's 500 comment limit can still leave some out. |  |
 | [Unlock Sync Ultra](#unlock-sync-ultra) | Unlocks Sync Ultra Lifetime. |  |
 
 </details>
 
 <details open>
-<summary>📦 Sync for Reddit Pro&nbsp;&nbsp;•&nbsp;&nbsp;3 patches</summary>
+<summary>📦 Sync for Reddit Pro&nbsp;&nbsp;•&nbsp;&nbsp;4 patches</summary>
 <br>
 
 **Package name:** `com.laurencedawson.reddit_sync.pro`
@@ -54,6 +55,7 @@ Click the button below, or manually add this repo url to Morphe Manager: https:/
 | 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
 |----------|----------------|-----------|
 | [Fix Reddit galleries](#fix-reddit-galleries) | Fixes Reddit image galleries failing to load ("Could not load gallery") since Reddit blocked /api/info for third-party clients. Galleries are loaded from /comments instead. |  |
+| [Fix Redgifs API](#fix-redgifs-api) | Fixes "Error connecting to Redgifs": answers the Redgifs endpoints Sync relies on that were removed, uses Redgifs' temporary token, and fixes video ids taken from links like redgifs.com/watch/{id}/?92. Works on Sync and Sync Pro. Turn off Patcheddit's "Fix Redgifs API" when using this one: both change the same code. |  |
 | [Fix load more comments](#fix-load-more-comments) | Fixes "Error loading more comments" since Reddit blocked /api/morechildren for third-party clients. The missing comments are loaded from /comments instead. At the bottom of very large threads Reddit's 500 comment limit can still leave some out. |  |
 | [Unlock Sync Ultra](#unlock-sync-ultra) | Unlocks Sync Ultra Lifetime. |  |
 
@@ -61,7 +63,13 @@ Click the button below, or manually add this repo url to Morphe Manager: https:/
 
 <!-- PATCHES_END -->
 
-Both patches are enabled by default and are independent: each can be selected or deselected on its own.
+All patches are enabled by default and are independent: each can be selected or deselected on its own.
+
+### Using with Patcheddit
+
+**Fix Redgifs API** replaces Patcheddit's patch of the same name, which fails on Sync because Redgifs removed
+the `/info` endpoint Sync calls (*Error connecting to Redgifs*). Both change the same code, so turn
+**Patcheddit's "Fix Redgifs API" off** when you use this one. If both are on, one of them fails to apply.
 
 ### Supported apps
 
@@ -95,8 +103,9 @@ provide APKs.
    bundle you built yourself, copy `patches-<version>.mpp` to the phone and add it as a local patch file.
 2. Add the patcheddit source as well (`https://github.com/wchill/patcheddit`) for **Spoof client** and its other
    Sync patches.
-3. Select your **original, unpatched** Sync APK, then select **Fix load more comments** and/or **Fix Reddit
-   galleries** along with the patcheddit patches you use.
+3. Select your **original, unpatched** Sync APK, then select the patches you want from this source along with
+   the patcheddit patches you use. If you select **Fix Redgifs API** here, turn off patcheddit's patch of the
+   same name.
 4. Patch and install.
 
 ### Morphe desktop / CLI
@@ -105,11 +114,11 @@ Download `morphe-desktop-<version>-all.jar` from
 [MorpheApp/morphe-cli releases](https://github.com/MorpheApp/morphe-cli/releases) and run:
 
 ```bash
-java -jar morphe-desktop-all.jar patch -p patches-1.0.0.mpp -p patcheddit.mpp -o sync-patched.apk sync.apk
+java -jar morphe-desktop-all.jar patch -p patches-<version>.mpp -p patcheddit.mpp -o sync-patched.apk sync.apk
 ```
 
-To apply only one of the fixes, add `--exclusive -e "Fix Reddit galleries"` (or `-e "Fix load more comments"`).
-Use `list-patches --patches=patches-1.0.0.mpp -p -v` to see the patches with their supported packages and
+To apply only some of the patches, add `--exclusive` and `-e "<patch name>"` for each one you want.
+Use `list-patches --patches=patches-<version>.mpp -p -v` to see the patches with their supported packages and
 versions.
 
 ## 🛠️ Building
@@ -182,6 +191,20 @@ The Kotlin patches only insert calls; the logic lives in the Java extension, whi
    the requested comments and everything under them, in pre-order (parents before replies, which Sync uses for
    indentation), with "more" items for deeper replies. If nothing could be loaded it returns Reddit's error
    shape, so Sync shows its normal error and keeps the row.
+
+**Fix Redgifs API** (adapted from [KingOfPoptart/patcheddit](https://github.com/KingOfPoptart/patcheddit),
+[wchill/patcheddit#100](https://github.com/wchill/patcheddit/pull/100)) installs an OkHttp interceptor on the
+client behind Sync's Volley requests. The patch finds that client by following the getter Volley's
+`BasicNetwork` calls to the field it returns, so it hooks the same client on Sync and Sync Pro.
+
+1. Sync asks `/v2/oauth/client` for a token, then `/info` for its IP address; Redgifs removed both. The
+   interceptor answers both itself, using Redgifs' current temporary token (`/v2/auth/temporary`), cached per
+   user agent.
+2. `/v2/gifs/{id}` goes out with that token and Sync's own user agent. If Redgifs rejects it (tokens are tied
+   to the IP address that requested them, so switching networks invalidates one), the request is retried once
+   with a new token.
+3. `LinkHandler.getGfycatId` strips the query before the trailing slash, so links like
+   `redgifs.com/watch/{id}/?92` no longer give an empty id.
 
 ## 🚀 Releasing
 
